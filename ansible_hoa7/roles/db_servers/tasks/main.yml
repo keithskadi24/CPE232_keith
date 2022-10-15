@@ -1,13 +1,19 @@
-  - name: install updates (CentOS)
-    tags: always
+  - name: install mariadb package (CentOS)
+    tags: centos, db,mariadb
     dnf:
-      update_only: yes
-      update_cache: yes
+      name: mariadb-server
+      state: latest
     when: ansible_distribution == "CentOS"
 
-  - name: install updates (Ubuntu)
-    tags: always
+  - name: "Mariadb- Restarting/Enabling"
+    service:
+      name: mariadb
+      state: restarted
+      enabled: true
+
+  - name: install mariadb package (Ubuntu)
+    tags: db, mariadb,ubuntu
     apt:
-      upgrade: dist
-      update_cache: yes
+      name: mariadb-server
+      state: latest
     when: ansible_distribution == "Ubuntu"
